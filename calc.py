@@ -1,7 +1,3 @@
-from pickle import TRUE
-from xmlrpc.client import boolean
-
-
 def calculate(s: str) -> int:
     marks = {"+", "-", "*"}
     stack = []                      # stack
@@ -22,7 +18,25 @@ def calculate(s: str) -> int:
             last_mark = ch
     return sum(stack)               # do final addition
 
-
+# Main function that continues to prompt the user to enter a mathematical equation until they wish to exit the program
 if __name__ == '__main__':
-    
-    print (calculate("2+8*2"))
+    programRunning = True
+    while programRunning:
+        print("Please enter a string corresponding to a mathematical equation: ")
+        equation = input()
+        if type(equation) == str:
+            if equation.lower() == "exit" or equation.lower() == "quit":
+                programRunning = False
+                print("See you again.")
+            else:
+                acceptableDigits = [' ', '+', '-', '*', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+                validEquation = True
+                for index in range(0, len(equation)):
+                    if(not equation[index] in acceptableDigits):
+                        validEquation = False
+                if validEquation:
+                    print(f"The result of {equation} is {calculate(equation)}")
+                else:
+                    print(f"Error: The equation {equation} is not valid.")
+        else:
+            print("Error: The equation you wish to have computed must be entered in the form of a string.")
